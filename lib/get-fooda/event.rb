@@ -1,9 +1,21 @@
 class Event
   attr_reader :date
 
+  def self.create(date)
+    event = self.new(date)
+    if event.valid?
+      event
+    else
+      NullEvent.new(date)
+    end
+  end
+
   def initialize(date)
     @date = date
-    raise NoEventFound, "No event found for #{date}" unless date == page_date
+  end
+
+  def valid?
+    @date == page_date && restaurants.any?
   end
 
   def to_slack_format
@@ -29,10 +41,6 @@ class Event
   end
 
   def fooda_url(date)
-    'https://app.fooda.com/my?' \
-      "date=#{date.strftime('%Y-%m-%d')}" \
-      "&filterable%5Baccount_id%5D=#{ENV['ACCOUNT']}" \
-      "&filterable%5Bbuilding_id%5D=#{ENV['BUILDING']}" \
-      "&filterable%5Bmeal_period%5D=#{ENV['MEAL']}"
+    "https://app.fooda.com/my?date=#{date.strftime('%Y-%m-%d')}"
   end
 end

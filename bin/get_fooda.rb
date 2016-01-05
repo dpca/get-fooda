@@ -2,4 +2,4 @@
 
 require_relative '../lib/get-fooda'
 
-puts Event.new(Date.today)
+puts Event.create(Date.today)
