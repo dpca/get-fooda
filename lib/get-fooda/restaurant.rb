@@ -16,7 +16,7 @@ class Restaurant
   end
 
   def to_s
-    "#{name} (#{cuisine})"
+    "#{name} (#{cuisine}) - #{link}"
   end
 
   def slack_text
